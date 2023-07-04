@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { SSRProvider } from '@fluentui/react-utilities';
 import { RendererProvider, createDOMRenderer } from '@griffel/react';
 import { AppProvider } from '../context';
+import { AppContainer } from '../components';
 import { Hydrate, QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '../clients/react-query';
 import { SessionProvider } from 'next-auth/react';
@@ -53,6 +54,7 @@ export default function App(props: AppProps) {
     setIsMounted(true);
   }, []);
 
+  console.log(theme.colorNeutralBackground2);
   return (
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
@@ -83,7 +85,9 @@ export default function App(props: AppProps) {
               <AppProvider value={{ setTheme, findTheme }}>
                 {isMounted && (
                   <FluentProvider theme={theme} style={fluentProviderStyles}>
-                    <Component {...pageProps} />
+                    <AppContainer>
+                      <Component {...pageProps} />
+                    </AppContainer>
                   </FluentProvider>
                 )}
               </AppProvider>
